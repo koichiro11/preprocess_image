@@ -1,0 +1,36 @@
+# pre-process for image recognition
+
+## Purpose
+
+implement some arts to pre-process for image recognition
+
+## Author
+
+koichiro tamura
+hiromi nakagawa
+
+## setting
+
+### pip
+- tensorflow (ver 1.4 recommended)
+
+### conda
+- joblib
+- scikit-learn
+- pillow
+
+
+## How to use
+
+```
+python preprocess.py \
+-o dataset/full \
+-s 10 \
+--gray
+```
+
+-options
+    -o, --output, path to output dataset. default=config.DATASET_DIR
+    -s, --num_shard, numer of output file. default=1
+    -l, --limit, limit the dataset size. for debug use. default=None
+    --gray, action=store_true, keep 1 channel image, not expand to 3 channel RGB image
