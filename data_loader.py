@@ -129,7 +129,7 @@ class DataLoaderCIFAR10(DataLoader):
 
         # create valid dataset
         train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y,
-                                                              train_size=int(len(train_X.shape[0])*self.train_ratio),
+                                                              train_size=int(len(train_X)*self.train_ratio),
                                                               random_state=self.random_state)
 
         # limit dataset size (for debug use)
