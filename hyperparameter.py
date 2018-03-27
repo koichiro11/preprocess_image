@@ -20,6 +20,17 @@ class HyperParameterDefault(object):
     train_ratio = 0.875  # train:valid(:test) = 7:1(:2)
     random_state = 1234
 
+    train_X_path = None
+    train_y_path = None
+    test_X_path = None
+    test_y_path = None
+
+    train_val_list_path = None
+    test_list_path = None
+    data_entry_path = None
+    bbox_list_path = None
+    LABEL_TO_INDEX = None
+
 
 class HyperParameterCIFAR10(HyperParameterDefault):
     """
