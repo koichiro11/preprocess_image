@@ -142,9 +142,9 @@ class DataLoaderCIFAR10(DataLoader):
             test_y  = test_y[:limit // num_shard]
 
         # save as tf-record
-        train_save_path_format = self.SAVE_DIR / 'train_{:02d}.tfrecord'
-        valid_save_path_format = self.SAVE_DIR / 'valid_{:02d}.tfrecord'
-        test_save_path_format = self.SAVE_DIR / 'test_{:02d}.tfrecord'
+        train_save_path_format = self.save_dir / 'train_{:02d}.tfrecord'
+        valid_save_path_format = self.save_dir / 'valid_{:02d}.tfrecord'
+        test_save_path_format = self.save_dir / 'test_{:02d}.tfrecord'
         self.save_as_tfrecords(train_X, train_y, train_save_path_format, num_shard)
         self.save_as_tfrecords(valid_X, valid_y, valid_save_path_format, 1)
         self.save_as_tfrecords(test_X, test_y, test_save_path_format, 1)
