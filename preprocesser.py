@@ -3,16 +3,17 @@
 preprocess class
 """
 import numpy as np
-from PIL import Image
 
 import tensorflow as tf
+from hyperparameter import HyperParameter as hp
 
 
 class PreProcessorDefault(object):
     """
-    data loader using tf.record
+    preprocessor
+
     """
-    def __init__(self, dataset="CIFAR-10", output_dims=10):
+    def __init__(self, dataset=hp.name, output_dims=hp.output_dims):
         """
         :param dataset: dataset name
         :param output_dims: output_dims of label
@@ -76,7 +77,7 @@ class PreProcessorDefault(object):
 
         # cast
         image = tf.decode_raw(features['image'], tf.uint8)
-        image = self.cast(image)
+        image = self.cast(image, h, w, c)
 
         label = tf.cast(features['label'], tf.int32)
 
@@ -94,13 +95,12 @@ class PreProcessorDefault(object):
         return image
 
 
-
 class PreProcessorWithAugmentation(PreProcessorDefault):
     """
     pre-process for image recognition
     if you would like to use pre-process for specific image dataset, please inheritance this class
     """
-    def __init__(self, dataset="CIFAR-10", output_dims=10):
+    def __init__(self, dataset=hp.name, output_dims=hp.output_dims):
         """
         :param dataset: dataset name
         :param output_dims: output_dims of label
@@ -122,7 +122,6 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
                     'input_h': 32,
                     'input_w': 32,
                     'channel': 3,
-                    'rgb': True
                     'is_training': True,
                 }
         :param num_parallel_calls: int or None, number of parallel processes to load dataset
@@ -136,10 +135,10 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
         iterator = dataset.make_one_shot_iterator()
         return iterator
 
-    def data_augmentation(self, image, resize_h, resize_w, input_h, input_w, channel=3, rgb=True, is_training=True):
+    def data_augmentation(self, image, resize_h, resize_w, input_h, input_w, channel=3, is_training=True):
         """
         data resize & augmentation function
-        please override this function for specific dataset
+        please override this function for specific data_augmentation
         :param image: tf.Tensor(dtype=tf.float32, shape=(h, w, c))
         :param resize_h: int, height after resizing original images
         :param resize_w: int, width after resizing original images
@@ -150,15 +149,6 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
         :param is_training: boolean, is training step or not
         :return image: tf.Tensor(dtype=tf.float32, shape=(h, w, c))
         """
-        # Adjust image type
-        # convert to PIL
-        pilimage = Image.fromarray(np.uint8(image))
-        if rgb:
-            pilimage = pilimage.convert('RGB')
-        else:
-            pilimage = pilimage.convert('L')
-        # re-convert to numpy.ndarray
-        image = np.asarray(pilimage)
 
         if is_training:
             # resize
@@ -174,7 +164,6 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
             
             # random erasing
             image = self.random_erasing(image, input_h, input_w, channel)
-
 
         else:
             # resize
@@ -233,17 +222,3 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
                     _mask = tf.expand_dims(tf.pad(tf.ones([H_e, W_e]), [[y_e, input_h - y_e - H_e], [x_e, input_w - x_e - W_e]]), axis=-1)
                     _unmask = 1.0 - _mask
                     return _mask * noise + _unmask * image
-
-
-class DataLoaderWithDataAugmentation(DataLoaderWithDataAugmentationDefault):
-    """
-    pre-process for image recognition
-    if you would like to use pre-process for specific image dataset, please implement functions of this class and use them
-    """
-    def __init__(self, dataset="CIFAR-10", output_dims=10):
-        """
-        :param dataset: dataset name
-        :param output_dims: output_dims of label
-        """
-        super().__init__(dataset, output_dims)
-

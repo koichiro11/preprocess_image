@@ -1,6 +1,7 @@
 # coding: utf-8
 """
-hyperparameter
+hyper-parameter class
+You should select class of use by inheritance
 """
 from pathlib import Path
 import os
@@ -25,6 +26,7 @@ class HyperParameterCIFAR10(HyperParameterDefault):
     hyper-parameter class
     """
     name = 'cifar-10'
+    output_dims = 10
     DATA_DIR = Path('/datadrive' / name)
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
@@ -41,6 +43,7 @@ class HyperParameterAG(HyperParameterDefault):
     hyper-parameter for AG dataset
     """
     name = 'chest_X_ray'
+    output_dims = 15
     DATA_DIR = Path('/datadrive' / name)
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
