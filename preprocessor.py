@@ -5,6 +5,7 @@ preprocess class
 import numpy as np
 
 import tensorflow as tf
+from tensorflow.python.ops import random_ops, math_ops
 from hyperparameter_preprocess_image import HyperParameter as hp
 
 
@@ -225,3 +226,79 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
                     _mask = tf.expand_dims(tf.pad(tf.ones([H_e, W_e]), [[y_e, input_h - y_e - H_e], [x_e, input_w - x_e - W_e]]), axis=-1)
                     _unmask = 1.0 - _mask
                     return _mask * noise + _unmask * image
+
+
+    @staticmethod
+    def random_erasing(image, input_h, input_w, channel, p=0.5, s_l=0.02, s_h=0.4, r1=0.3, r2=1. / 0.3):
+        """
+        random erasing for tf.record
+        this function is proposed by [Random Erasing Data Augmentation]
+        ref: https://arxiv.org/abs/1708.04896
+
+        :param image: tf.Tensor(dtype=tf.float32, shape=(h, w, c))
+        :param p: probability to random erasing
+        :param input_h: size of height
+        :param input_w: size of width
+        :param channel: image channel
+        :param s_l: min ratio of S
+        :param s_h: max ration of S
+        :param r1: ratio of aspect 1
+        :param r2: ratio of aspect 2
+        :return: random erased image
+        """
+
+        def func1():
+            return image
+
+        def func2():
+            # 面積比の決定
+            S_e_0 = tf.random_uniform([], minval=input_h * input_w * s_l, maxval=input_h * input_w * s_h)
+
+            # アスペクト比の決定
+            r_e_0 = tf.random_uniform([], minval=r1, maxval=r2)
+            H_e_0 = tf.cast(tf.sqrt(S_e_0 * r_e_0), tf.int32)
+            W_e_0 = tf.cast(tf.sqrt(S_e_0 / r_e_0), tf.int32)
+
+            # 位置の決定
+            x_e_0 = tf.cast(random_ops.random_uniform([], 0, maxval=input_w - tf.cast(W_e_0, tf.float32)), tf.int32)
+            y_e_0 = tf.cast(random_ops.random_uniform([], 0, maxval=input_h - tf.cast(H_e_0, tf.float32)), tf.int32)
+
+            def cond(x_e, W_e, y_e, H_e):
+                return (x_e + W_e > input_w) | (y_e + H_e > input_h)
+                # return x_e + W_e > input_w
+
+            def body(x_e, W_e, y_e, H_e):
+                # 面積比の決定
+                S_e = tf.random_uniform([], minval=input_h * input_w * s_l, maxval=input_h * input_w * s_h)
+
+                # アスペクト比の決定
+                r_e = tf.random_uniform([], minval=r1, maxval=r2)
+                H_e = tf.cast(tf.sqrt(S_e * r_e), tf.int32)
+                W_e = tf.cast(tf.sqrt(S_e / r_e), tf.int32)
+
+                # 位置の決定
+                x_e = tf.cast(random_ops.random_uniform([], 0, maxval=input_w - tf.cast(W_e, tf.float32)), tf.int32)
+                y_e = tf.cast(random_ops.random_uniform([], 0, maxval=input_h - tf.cast(H_e, tf.float32)), tf.int32)
+                return x_e, W_e, y_e, H_e
+
+            x_e_f, W_e_f, y_e_f, H_e_f = tf.while_loop(
+                cond,
+                body,
+                [x_e_0, W_e_0, y_e_0, H_e_0]
+            )
+
+            noise = tf.random_uniform([input_h, input_w, channel])
+            _mask = tf.expand_dims(
+                tf.pad(tf.ones([H_e_f, W_e_f]), [[y_e_f, input_h - y_e_f - H_e_f], [x_e_f, input_w - x_e_f - W_e_f]]),
+                axis=-1)
+            _unmask = 1.0 - _mask
+            return _mask * noise + _unmask * image
+            # return _mask
+
+        p1 = random_ops.random_uniform([], 0, 1.0)
+
+        return tf.cond(
+            p1 < p,
+            func1,
+            func2
+        )

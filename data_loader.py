@@ -243,7 +243,6 @@ class DataLoaderAG(DataLoader):
                  bbox_list_path=hp.bbox_list_path,
                  ):
         """
-        :param label_dict: dict, {image path: label string}
         :param image_dir: image directory, ex: '/datadrive/chest_X_ray/images'
         :param save_dir: directory to save TFRecord, ex: '~/chest_X_ray/'
         :param label_to_index: dict for label to index
