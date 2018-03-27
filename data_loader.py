@@ -15,7 +15,7 @@ from keras.datasets import cifar10
 from sklearn.model_selection import train_test_split
 
 
-from . import hyperparameter.HyperParameter as hp
+from .hyperparameter import HyperParameter as hp
 
 
 class DataLoader(object):
