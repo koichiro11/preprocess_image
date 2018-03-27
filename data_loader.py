@@ -190,13 +190,13 @@ class DataLoaderCIFAR10(DataLoader):
             train_X, test_X = _train_X.astype('float32'), _test_X.astype('float32')
             train_y, test_y = np.eye(10)[_train_y.astype('int32').flatten()], np.eye(10)[_test_y.astype('int32').flatten()]
 
-            with self.train_X_path.open() as f:
+            with self.train_X_path.open(mode='wb') as f:
                 pickle.dump(train_X, f)
-            with self.train_y_path.open() as f:
+            with self.train_y_path.open(mode='wb') as f:
                 pickle.dump(train_y, f)
-            with self.test_X_path.open() as f:
+            with self.test_X_path.open(mode='wb') as f:
                 pickle.dump(test_X, f)
-            with self.test_y_path.open() as f:
+            with self.test_y_path.open(mode='wb') as f:
                 pickle.dump(test_y, f)
 
         return train_X, train_y, test_X, test_y
