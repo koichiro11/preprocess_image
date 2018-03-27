@@ -6,8 +6,8 @@ implement some arts to pre-process for image recognition
 
 ## Author
 
-koichiro tamura
-hiromi nakagawa
+- koichiro tamura
+- hiromi nakagawa
 
 ## setting
 
@@ -27,7 +27,6 @@ hiromi nakagawa
 ### 1. set hyperparameter class
 
 First, you choose Hyperparameter class to choose.
-ex)
 
 For example, when you use CIFAR-10, you set Hyperparameter class in hyperparameter.py as follows:
 
@@ -42,6 +41,7 @@ Make sure you define correct hyper-parameter.
 
 Second, you load data to use and create TFRecord for training.
 Before training, execute the `file` as follows.
+
 Make sure you use correct class corresponding to the dataset.
 
 ```
@@ -57,8 +57,7 @@ if __name__ == '__main__':
     data_loader = DataLoader()
     data_loader.main()
 
-```
-in load_data.py
+```load_data.py
 
 
 when you use specific test data, you use as follows.
@@ -104,7 +103,7 @@ if __name__ == '__main__':
     train_dataset = preprocess.load_tfrecords_dataset(train_path, image_size, 10)
 
     # define iterator
-    train_iterator = get_iterator(
+    train_iterator = preprocess.get_iterator(
         train_dataset, batch_size=batch_size, num_epochs=args.num_epochs, buffer_size=100*batch_size, aug_func=train_aug_func, aug_kwargs=aug_kwargs)
 
     train_batch = train_iterator.get_next()
@@ -114,6 +113,5 @@ if __name__ == '__main__':
         for i in range(math.ceil(train_size / total_batch_size)):
             train_X_mb, train_Y_mb = sess.run(train_batch)
 
-```
-in preprocess_data.py
+```preprocess_data.py
 
