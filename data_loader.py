@@ -174,13 +174,13 @@ class DataLoaderCIFAR10(DataLoader):
 
         if self.train_X_path.exists():
             print("load data from pickle")
-            with self.train_X_path.open() as f:
+            with self.train_X_path.open(mode='rb') as f:
                 train_X = pickle.load(f)
-            with self.train_y_path.open() as f:
+            with self.train_y_path.open(mode='rb') as f:
                 train_y = pickle.load(f)
-            with self.test_X_path.open() as f:
+            with self.test_X_path.open(mode='rb') as f:
                 test_X = pickle.load(f)
-            with self.test_y_path.open() as f:
+            with self.test_y_path.open(mode='rb') as f:
                 test_y = pickle.load(f)
 
         else:
