@@ -55,7 +55,7 @@ class DataLoader(object):
         :return example: instance of tf.train.Example
         """
         feature = {
-            'image': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image])),
+            'image': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image.tobytes()])),
             'label': tf.train.Feature(int64_list=tf.train.Int64List(value=label)),
         }
         example = tf.train.Example(features=tf.train.Features(feature=feature))
