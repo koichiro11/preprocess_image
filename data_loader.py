@@ -127,9 +127,6 @@ class DataLoaderCIFAR10(DataLoader):
         # load original dataset (get numpy array)
         train_X, train_y, test_X, test_y = self.load_original_data()
 
-        # adjustment images through PIL
-
-
         # create valid dataset
         train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y,
                                                               train_size=int(len(train_X.shape[0])*self.train_ratio),
