@@ -213,8 +213,8 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
 
                 # アスペクト比の決定
                 r_e = np.random.uniform(low=r1, high=r2)
-                H_e = np.sqrt(S_e * r_e)
-                W_e = np.sqrt(S_e / r_e)
+                H_e = int(np.sqrt(S_e * r_e))
+                W_e = int(np.sqrt(S_e / r_e))
 
                 # 位置の決定
                 x_e = np.random.randint(0, input_w)
