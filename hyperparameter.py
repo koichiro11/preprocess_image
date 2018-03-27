@@ -12,7 +12,7 @@ class HyperParameterDefault(object):
     hyper-parameter class
     """
     name = "dataset"
-    DATA_DIR = Path('/datadrive' / name)
+    DATA_DIR = Path('/datadrive') / name
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
     SAVE_DIR = DATA_DIR / 'record'
@@ -27,7 +27,7 @@ class HyperParameterCIFAR10(HyperParameterDefault):
     """
     name = 'cifar-10'
     output_dims = 10
-    DATA_DIR = Path('/datadrive' / name)
+    DATA_DIR = Path('/datadrive') / name
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
     SAVE_DIR = DATA_DIR / 'record'
@@ -44,7 +44,7 @@ class HyperParameterAG(HyperParameterDefault):
     """
     name = 'chest_X_ray'
     output_dims = 15
-    DATA_DIR = Path('/datadrive' / name)
+    DATA_DIR = Path('/datadrive') / name
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
     SAVE_DIR = DATA_DIR / 'record'
