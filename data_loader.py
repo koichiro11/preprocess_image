@@ -174,29 +174,29 @@ class DataLoaderCIFAR10(DataLoader):
 
         if hp.train_X_path.exists():
             print("load data from pickle")
-            with open(self.train_X_path, 'rb') as f:
+            with self.train_X_path.open() as f:
                 train_X = pickle.load(f)
-            with open(self.train_y_path, 'rb') as f:
+            with self.train_y_path.open() as f:
                 train_y = pickle.load(f)
-            with open(self.test_X_path, 'rb') as f:
+            with self.test_X_path.open() as f:
                 test_X = pickle.load(f)
-            with open(self.test_y_path, 'rb') as f:
+            with self.test_y_path.open() as f:
                 test_y = pickle.load(f)
 
         else:
             print("load data from keras.library")
             (_train_X, _train_y), (_test_X, _test_y) = cifar10.load_data()
-            # TODO(cast is moved to preprocessor)
+
             train_X, test_X = _train_X.astype('float32'), _test_X.astype('float32')
             train_y, test_y = np.eye(10)[_train_y.astype('int32').flatten()], np.eye(10)[_test_y.astype('int32').flatten()]
 
-            with open(self.train_X_path, 'rb') as f:
+            with self.train_X_path.open() as f:
                 pickle.dump(train_X, f)
-            with open(self.train_y_path, 'rb') as f:
+            with self.train_y_path.open() as f:
                 pickle.dump(train_y, f)
-            with open(self.test_X_path, 'rb') as f:
+            with self.test_X_path.open() as f:
                 pickle.dump(test_X, f)
-            with open(self.test_y_path, 'rb') as f:
+            with self.test_y_path.open() as f:
                 pickle.dump(test_y, f)
 
         return train_X, train_y, test_X, test_y
