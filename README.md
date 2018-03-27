@@ -98,17 +98,17 @@ if __name__ == '__main__':
     preprocess = PreProcessorWithAugmentation()
     train_path = Path('train*.tfrecord')
     image_size = {
-        'height',
-        'width',
-        'channel',
+        'height': 32,
+        'width': 32,
+        'channel': 3,
     }
 
     # load dataset
-    train_dataset = preprocess.load_tfrecords_dataset(train_path, image_size, 10)
+    train_dataset = preprocess.load_tfrecords_dataset(train_path, image_size, num_parallel_calls=10)
 
     # define iterator
     train_iterator = preprocess.get_iterator(
-        train_dataset, batch_size=batch_size, num_epochs=args.num_epochs, buffer_size=100*batch_size, aug_kwargs=aug_kwargs, num)
+        train_dataset, batch_size=batch_size, num_epochs=args.num_epochs, buffer_size=100*batch_size, aug_kwargs=aug_kwargs, num_parallel_calls=10)
 
     train_batch = train_iterator.get_next()
 

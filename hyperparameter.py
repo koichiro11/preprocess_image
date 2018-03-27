@@ -13,7 +13,6 @@ class HyperParameterDefault(object):
     """
     name = "dataset"
     DATA_DIR = Path('/datadrive') / name
-    os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
     SAVE_DIR = DATA_DIR / 'record'
 
@@ -39,11 +38,8 @@ class HyperParameterCIFAR10(HyperParameterDefault):
     name = 'cifar-10'
     output_dims = 10
     DATA_DIR = Path('/datadrive') / name
-    os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
-    os.makedirs(str(IMAGE_DIR), exist_ok=True)
     SAVE_DIR = DATA_DIR / 'record'
-    os.makedirs(str(SAVE_DIR ), exist_ok=True)
 
     train_X_path = IMAGE_DIR / 'train_X.pkl'
     train_y_path = IMAGE_DIR / 'train_y.pkl'
@@ -94,3 +90,6 @@ class HyperParameter(HyperParameterCIFAR10):
     """
     def __init__(self):
         print("use hyper-parameter for %s" % self.name)
+        os.makedirs(str(self.DATA_DIR), exist_ok=True)
+        os.makedirs(str(self.IMAGE_DIR), exist_ok=True)
+        os.makedirs(str(self.SAVE_DIR), exist_ok=True)

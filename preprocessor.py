@@ -5,7 +5,7 @@ preprocess class
 import numpy as np
 
 import tensorflow as tf
-from hyperparameter import HyperParameter as hp
+from .hyperparameter import HyperParameter as hp
 
 
 class PreProcessorDefault(object):
