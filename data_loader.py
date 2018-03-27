@@ -218,6 +218,7 @@ class DataLoaderCIFAR10(DataLoader):
             _labels = labels[i * shard_size:(i + 1) * shard_size]
             print('[Info] saving {:,} files to {} ...'.format(len(_images), save_path))
             for image, label in zip(_images, _labels):
+                label = np.asarray(label, dtype=int)
                 ex = self.make_example(image, label)
                 writer.write(ex.SerializeToString())
 
