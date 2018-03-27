@@ -219,6 +219,7 @@ class DataLoaderCIFAR10(DataLoader):
             print('[Info] saving {:,} files to {} ...'.format(len(_images), save_path))
             for image, label in zip(_images, _labels):
                 label = np.asarray(label, dtype=int)
+                image = self.convert_from_pil_into_numpy(Image.fromarray(np.uint8(image))).tobytes()
                 ex = self.make_example(image, label)
                 writer.write(ex.SerializeToString())
 

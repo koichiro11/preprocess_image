@@ -149,7 +149,6 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
         :param input_h: int, input height
         :param input_w: int, input width
         :param channel: int, input channel
-        :param rgb: boolean, whether to load image in RGB mode. channel=3 if True and otherwise channel=1
         :param is_training: boolean, is training step or not
         :return image: tf.Tensor(dtype=tf.float32, shape=(h, w, c))
         """
