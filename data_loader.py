@@ -23,7 +23,7 @@ class DataLoader(object):
     load original data and create TFRecord
     """
     def __init__(self,
-                 image_dir=hp.IMAGR_DIR,
+                 image_dir=hp.IMAGE_DIR,
                  save_dir=hp.SAVE_DIR,
                  train_ratio=hp.train_ratio,
                  random_state=hp.random_state):
@@ -85,7 +85,7 @@ class DataLoaderCIFAR10(DataLoader):
     if you would like to use pre-process for specific image dataset, please inheritance this class
     """
     def __init__(self,
-                 image_dir=hp.IMAGR_DIR,
+                 image_dir=hp.IMAGE_DIR,
                  save_dir=hp.SAVE_DIR,
                  train_ratio=hp.train_ratio,
                  random_state=hp.random_state,
@@ -231,7 +231,7 @@ class DataLoaderAG(DataLoader):
     When you load image one by one
     """
     def __init__(self,
-                 image_dir=hp.IMAGR_DIR,
+                 image_dir=hp.IMAGE_DIR,
                  save_dir=hp.SAVE_DIR,
                  train_ratio=hp.train_ratio,
                  random_state=hp.random_state,
