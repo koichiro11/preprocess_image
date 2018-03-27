@@ -15,7 +15,7 @@ from keras.datasets import cifar10
 from sklearn.model_selection import train_test_split
 
 
-from .hyperparameter import HyperParameter as hp
+from . import hyperparameter as hp
 
 
 class DataLoader(object):
@@ -23,10 +23,10 @@ class DataLoader(object):
     load original data and create TFRecord
     """
     def __init__(self,
-                 image_dir=hp.IMAGE_DIR,
-                 save_dir=hp.SAVE_DIR,
-                 train_ratio=hp.train_ratio,
-                 random_state=hp.random_state):
+                 image_dir=hp.HyperParameter.IMAGE_DIR,
+                 save_dir=hp.HyperParameter.SAVE_DIR,
+                 train_ratio=hp.HyperParameter.train_ratio,
+                 random_state=hp.HyperParameter.random_state):
         """
         :param image_dir: Path object, image directory ex: '/datadrive/chest_X_ray/images'
         :param save_dir: Path object,directory to save TFRecord and info
@@ -85,14 +85,14 @@ class DataLoaderCIFAR10(DataLoader):
     if you would like to use pre-process for specific image dataset, please inheritance this class
     """
     def __init__(self,
-                 image_dir=hp.IMAGE_DIR,
-                 save_dir=hp.SAVE_DIR,
-                 train_ratio=hp.train_ratio,
-                 random_state=hp.random_state,
-                 train_X_path=hp.train_X_path,
-                 train_y_path=hp.train_y_path,
-                 test_X_path=hp.test_X_path,
-                 test_y_path=hp.test_y_path,
+                 image_dir=hp.HyperParameter.IMAGE_DIR,
+                 save_dir=hp.HyperParameter.SAVE_DIR,
+                 train_ratio=hp.HyperParameter.train_ratio,
+                 random_state=hp.HyperParameter.random_state,
+                 train_X_path=hp.HyperParameter.train_X_path,
+                 train_y_path=hp.HyperParameter.train_y_path,
+                 test_X_path=hp.HyperParameter.test_X_path,
+                 test_y_path=hp.HyperParameter.test_y_path,
                  ):
         """
          :param image_dir: Path object, image directory ex: '/datadrive/chest_X_ray/images'
@@ -231,15 +231,15 @@ class DataLoaderAG(DataLoader):
     When you load image one by one
     """
     def __init__(self,
-                 image_dir=hp.IMAGE_DIR,
-                 save_dir=hp.SAVE_DIR,
-                 train_ratio=hp.train_ratio,
-                 random_state=hp.random_state,
-                 label_to_index=hp.LABEL_TO_INDEX,
-                 train_val_list_path=hp.train_val_list_path,
-                 test_list_path=hp.test_list_path,
-                 data_entry_path=hp.data_entry_path,
-                 bbox_list_path=hp.bbox_list_path,
+                 image_dir=hp.HyperParameter.IMAGE_DIR,
+                 save_dir=hp.HyperParameter.SAVE_DIR,
+                 train_ratio=hp.HyperParameter.train_ratio,
+                 random_state=hp.HyperParameter.random_state,
+                 label_to_index=hp.HyperParameter.LABEL_TO_INDEX,
+                 train_val_list_path=hp.HyperParameter.train_val_list_path,
+                 test_list_path=hp.HyperParameter.test_list_path,
+                 data_entry_path=hp.HyperParameter.data_entry_path,
+                 bbox_list_path=hp.HyperParameter.bbox_list_path,
                  ):
         """
         :param label_dict: dict, {image path: label string}

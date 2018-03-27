@@ -5,7 +5,7 @@ preprocess class
 import numpy as np
 
 import tensorflow as tf
-from .hyperparameter import HyperParameter as hp
+from . import hyperparameter as hp
 
 
 class PreProcessorDefault(object):
@@ -13,7 +13,9 @@ class PreProcessorDefault(object):
     preprocessor
 
     """
-    def __init__(self, dataset=hp.name, output_dims=hp.output_dims):
+    def __init__(self,
+                 dataset=hp.HyperParameter.name,
+                 output_dims=hp.HyperParameter.output_dims):
         """
         :param dataset: dataset name
         :param output_dims: output_dims of label
@@ -100,7 +102,9 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
     pre-process for image recognition
     if you would like to use pre-process for specific image dataset, please inheritance this class
     """
-    def __init__(self, dataset=hp.name, output_dims=hp.output_dims):
+    def __init__(self,
+                 dataset=hp.HyperParameter.name,
+                 output_dims=hp.HyperParameter.output_dims):
         """
         :param dataset: dataset name
         :param output_dims: output_dims of label
