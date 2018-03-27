@@ -108,10 +108,10 @@ class DataLoaderCIFAR10(DataLoader):
                          save_dir=save_dir,
                          train_ratio=train_ratio,
                          random_state=random_state)
-        self.train_X_path = train_X_path,
-        self.train_y_path = train_y_path,
-        self.test_X_path = test_X_path,
-        self.test_y_path = test_y_path,
+        self.train_X_path = train_X_path
+        self.train_y_path = train_y_path
+        self.test_X_path = test_X_path
+        self.test_y_path = test_y_path
 
 
     def main(self,
@@ -142,9 +142,9 @@ class DataLoaderCIFAR10(DataLoader):
             test_y  = test_y[:limit // num_shard]
 
         # save as tf-record
-        train_save_path_format = hp.DATA_DIR / 'train_{:02d}.tfrecord'
-        valid_save_path_format = hp.DATA_DIR / 'valid_{:02d}.tfrecord'
-        test_save_path_format = hp.DATA_DIR / 'test_{:02d}.tfrecord'
+        train_save_path_format = self.SAVE_DIR / 'train_{:02d}.tfrecord'
+        valid_save_path_format = self.SAVE_DIR / 'valid_{:02d}.tfrecord'
+        test_save_path_format = self.SAVE_DIR / 'test_{:02d}.tfrecord'
         self.save_as_tfrecords(train_X, train_y, train_save_path_format, num_shard)
         self.save_as_tfrecords(valid_X, valid_y, valid_save_path_format, 1)
         self.save_as_tfrecords(test_X, test_y, test_save_path_format, 1)
@@ -172,7 +172,7 @@ class DataLoaderCIFAR10(DataLoader):
         :return: numpy array of dataset
         """
 
-        if hp.train_X_path.exists():
+        if self.train_X_path.exists():
             print("load data from pickle")
             with self.train_X_path.open() as f:
                 train_X = pickle.load(f)
