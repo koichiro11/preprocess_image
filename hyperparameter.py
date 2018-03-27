@@ -41,7 +41,9 @@ class HyperParameterCIFAR10(HyperParameterDefault):
     DATA_DIR = Path('/datadrive') / name
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
+    os.makedirs(str(IMAGE_DIR), exist_ok=True)
     SAVE_DIR = DATA_DIR / 'record'
+    os.makedirs(str(SAVE_DIR ), exist_ok=True)
 
     train_X_path = IMAGE_DIR / 'train_X.pkl'
     train_y_path = IMAGE_DIR / 'train_y.pkl'
@@ -58,7 +60,9 @@ class HyperParameterAG(HyperParameterDefault):
     DATA_DIR = Path('/datadrive') / name
     os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
+    os.makedirs(str(IMAGE_DIR), exist_ok=True)
     SAVE_DIR = DATA_DIR / 'record'
+    os.makedirs(str(SAVE_DIR), exist_ok=True)
 
 
     train_val_list_path = IMAGE_DIR / 'train_val_list.txt'
