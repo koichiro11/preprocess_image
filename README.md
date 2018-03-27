@@ -44,6 +44,8 @@ Before training, execute the `file` as follows.
 
 Make sure you use correct class corresponding to the dataset.
 
+- train
+
 ```
 $ python load_data.py
 ```
@@ -59,6 +61,7 @@ if __name__ == '__main__':
 
 ```load_data.py
 
+- test
 
 when you use specific test data, you use as follows.
 
@@ -104,7 +107,7 @@ if __name__ == '__main__':
 
     # define iterator
     train_iterator = preprocess.get_iterator(
-        train_dataset, batch_size=batch_size, num_epochs=args.num_epochs, buffer_size=100*batch_size, aug_func=train_aug_func, aug_kwargs=aug_kwargs)
+        train_dataset, batch_size=batch_size, num_epochs=args.num_epochs, buffer_size=100*batch_size, aug_kwargs=aug_kwargs, num)
 
     train_batch = train_iterator.get_next()
 

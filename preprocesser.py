@@ -107,7 +107,7 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
         """
         super().__init__(dataset, output_dims)
 
-    def get_iterator(self, dataset, batch_size, num_epochs, buffer_size, aug_kwargs, num_parallel_calls):
+    def get_iterator(self, dataset, batch_size, num_epochs, buffer_size, aug_kwargs, num_parallel_calls=None):
         """
         get data iterator.
         :param dataset: tf.data.Dataset API

@@ -1,6 +1,6 @@
 # coding: utf-8
 """
-create tf record
+data loader class to create tf record
 """
 import abc
 import pandas as pd
