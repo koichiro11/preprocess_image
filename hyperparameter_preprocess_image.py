@@ -54,12 +54,8 @@ class HyperParameterAG(HyperParameterDefault):
     name = 'chest_X_ray'
     output_dims = 15
     DATA_DIR = Path('/datadrive') / name
-    os.makedirs(str(DATA_DIR), exist_ok=True)
     IMAGE_DIR = DATA_DIR / 'original'
-    os.makedirs(str(IMAGE_DIR), exist_ok=True)
     SAVE_DIR = DATA_DIR / 'record'
-    os.makedirs(str(SAVE_DIR), exist_ok=True)
-
 
     train_val_list_path = IMAGE_DIR / 'train_val_list.txt'
     test_list_path = IMAGE_DIR / 'test_list.txt'
@@ -84,12 +80,14 @@ class HyperParameterAG(HyperParameterDefault):
         'Hernia': 14,
     }
 
+
 class HyperParameter(HyperParameterCIFAR10):
     """
     HyperParameter class to use
     """
     def __init__(self):
         print("use hyper-parameter for %s" % self.name)
-        os.makedirs(str(self.DATA_DIR), exist_ok=True)
-        os.makedirs(str(self.IMAGE_DIR), exist_ok=True)
-        os.makedirs(str(self.SAVE_DIR), exist_ok=True)
+        self.DATA_DIR.mkdir(exist_ok=True)
+        self.IMAGE_DIR.mkdir(exist_ok=True)
+        self.SAVE_DIR.mkdir(exist_ok=True)
+
