@@ -160,14 +160,18 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
             # random size cropping
             image = tf.random_crop(image, [input_h, input_w, channel])
 
-            # whiting(standardization): mean subtraction
-            image = tf.image.per_image_standardization(image)
-
             # horizontal Flip
             image = tf.image.random_flip_left_right(image)
-            
+
             # random erasing
             image = self.random_erasing(image, input_h, input_w, channel)
+
+            # random brightness & contrast
+            image = tf.image.random_brightness(image, max_delta=63)
+            image = tf.image.random_contrast(image, lower=0.2, upper=1.8)
+
+            # whiting(standardization): mean subtraction
+            image = tf.image.per_image_standardization(image)
 
         else:
             # resize
