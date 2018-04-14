@@ -36,8 +36,8 @@ class PreProcessorDefault(object):
         """
 
         dataset = dataset.shuffle(buffer_size=buffer_size)
-        dataset = dataset.batch(batch_size)
         dataset = dataset.repeat(num_epochs)
+        dataset = dataset.batch(batch_size)
         iterator = dataset.make_one_shot_iterator()
         return iterator
 
@@ -133,10 +133,11 @@ class PreProcessorWithAugmentation(PreProcessorDefault):
         :return iterator: Iterator instance
         """
 
-        dataset = dataset.map(lambda i, l: (self.data_augmentation(i, **aug_kwargs), l), num_parallel_calls=num_parallel_calls)
         dataset = dataset.shuffle(buffer_size=buffer_size)
-        dataset = dataset.batch(batch_size)
         dataset = dataset.repeat(num_epochs)
+        dataset = dataset.map(lambda i, l: (self.data_augmentation(i, **aug_kwargs), l),
+                              num_parallel_calls=num_parallel_calls)
+        dataset = dataset.batch(batch_size)
         iterator = dataset.make_one_shot_iterator()
         return iterator
 
