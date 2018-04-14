@@ -47,7 +47,7 @@ Make sure you use correct class corresponding to the dataset.
 - train
 
 ```
-$ python load_data.py
+$ python create_tf_record.py
 ```
 
 ```python
